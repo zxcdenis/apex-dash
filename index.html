@@ -69,7 +69,7 @@ section{display:flex;flex-direction:column;gap:14px}
 .ct{font-family:var(--disp);font-weight:600;font-size:var(--f-lg);margin:0 0 3px;text-transform:uppercase}
 .cs{font-size:var(--f-xs);color:var(--muted);margin:0 0 14px;font-family:var(--mono)}
 .g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
-.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px}
 
 .bars{display:flex;flex-direction:column;gap:7px}
 .bar{display:grid;grid-template-columns:minmax(92px,32%) 1fr auto;align-items:center;gap:10px}
@@ -102,11 +102,12 @@ section{display:flex;flex-direction:column;gap:14px}
 
 .spark{display:flex;flex-direction:column;gap:5px}
 .spark .sn{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.spark .sn b{font-size:var(--f-sm);font-weight:600}
-.spark .sn b em{font-style:normal;font-family:var(--mono);font-size:9px;font-weight:400;
+.spark .sn b{font-size:var(--f-sm);font-weight:600;min-width:0}
+.spark .sn span{font-family:var(--mono);font-size:var(--f-xs);color:var(--muted);white-space:nowrap}
+.spark .badge{align-self:flex-start;font-family:var(--mono);font-size:9px;
   text-transform:uppercase;letter-spacing:.05em;color:var(--accent);border:1px solid var(--accent);
-  border-radius:2px;padding:1px 4px;margin-left:5px;vertical-align:2px}
-.spark .sn span{font-family:var(--mono);font-size:var(--f-xs);color:var(--muted)}
+  border-radius:2px;padding:1px 5px;white-space:nowrap;margin-top:-1px}
+.spark .cap{font-family:var(--mono);font-size:10px;color:var(--muted)}
 
 table{border-collapse:collapse;width:100%;font-size:var(--f-xs);margin-top:6px}
 th,td{text-align:left;padding:5px 9px;border-bottom:1px solid var(--grid)}
@@ -436,9 +437,10 @@ footer{border-top:1px solid var(--rule);padding-top:16px;font-size:var(--f-xs);c
                    : '<line x1="'+(i*bw+1)+'" y1="'+H+'" x2="'+(i*bw+bw-1)+'" y2="'+H+'" stroke="var(--rule)" stroke-width="1.5"/>';
       }).join("");
       var src = g.ns ? 'фев 25 → сен 26 · по файлам .minecraft' : 'фев 25 → сен 26 · дней запуска';
-      return '<div class="card spark"><div class="sn"><b>'+esc(g.name)+(g.ns?' <em>не Steam</em>':'')+'</b><span>'+g.days+' дн.</span></div>'+
+      return '<div class="card spark"><div class="sn"><b>'+esc(g.name)+'</b><span>'+g.days+' дн.</span></div>'+
+        (g.ns ? '<span class="badge">не Steam</span>' : '')+
         '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(g.name)+': дни запуска по месяцам">'+b+'</svg>'+
-        '<span style="font-family:var(--mono);font-size:10px;color:var(--muted)">'+src+'</span></div>';
+        '<span class="cap">'+src+'</span></div>';
     }).join("");
   })();
 
