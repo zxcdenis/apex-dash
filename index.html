@@ -104,9 +104,6 @@ section{display:flex;flex-direction:column;gap:14px}
 .spark .sn{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .spark .sn b{font-size:var(--f-sm);font-weight:600;min-width:0}
 .spark .sn span{font-family:var(--mono);font-size:var(--f-xs);color:var(--muted);white-space:nowrap}
-.spark .badge{align-self:flex-start;font-family:var(--mono);font-size:9px;
-  text-transform:uppercase;letter-spacing:.05em;color:var(--accent);border:1px solid var(--accent);
-  border-radius:2px;padding:1px 5px;white-space:nowrap;margin-top:-1px}
 .spark .cap{font-family:var(--mono);font-size:10px;color:var(--muted)}
 
 table{border-collapse:collapse;width:100%;font-size:var(--f-xs);margin-top:6px}
@@ -438,7 +435,6 @@ footer{border-top:1px solid var(--rule);padding-top:16px;font-size:var(--f-xs);c
       }).join("");
       var src = g.ns ? 'фев 25 → сен 26 · по файлам .minecraft' : 'фев 25 → сен 26 · дней запуска';
       return '<div class="card spark"><div class="sn"><b>'+esc(g.name)+'</b><span>'+g.days+' дн.</span></div>'+
-        (g.ns ? '<span class="badge">не Steam</span>' : '')+
         '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(g.name)+': дни запуска по месяцам">'+b+'</svg>'+
         '<span class="cap">'+src+'</span></div>';
     }).join("");
