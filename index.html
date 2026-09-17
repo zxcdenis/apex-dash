@@ -1,0 +1,451 @@
+<title>1267 часов в Apex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --plane:#eeeae3; --surface:#faf8f4; --raised:#ffffff;
+  --ink:#17140f; --ink2:#524b40; --muted:#8b8272;
+  --grid:#e2ddd2; --rule:#c9c1b2; --ring:rgba(23,20,15,.12);
+  --accent:#eb6834; --accent2:#2a78d6; --crit:#d03b3b;
+  --track:#e4dfd4; --wash:rgba(235,104,52,.12);
+  --f-xs:.73rem; --f-sm:.84rem; --f-b:.95rem; --f-lg:1.1rem; --f-xl:1.5rem;
+  --disp:"Oswald","Golos Text",system-ui,sans-serif;
+  --sans:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --plane:#0a0806; --surface:#17140f; --raised:#211d16;
+    --ink:#f6f2e9; --ink2:#b7ae9e; --muted:#867d6e;
+    --grid:#2a251d; --rule:#392f24; --ring:rgba(246,242,233,.13);
+    --accent:#d95926; --accent2:#3987e5; --crit:#d03b3b;
+    --track:#272117; --wash:rgba(217,89,38,.16);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --plane:#0a0806; --surface:#17140f; --raised:#211d16;
+  --ink:#f6f2e9; --ink2:#b7ae9e; --muted:#867d6e;
+  --grid:#2a251d; --rule:#392f24; --ring:rgba(246,242,233,.13);
+  --accent:#d95926; --accent2:#3987e5; --crit:#d03b3b;
+  --track:#272117; --wash:rgba(217,89,38,.16);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--plane); color:var(--ink); font-family:var(--sans);
+  font-size:var(--f-b); line-height:1.58; margin:0;
+  padding-block:0 56px; padding-inline:clamp(14px,3.5vw,36px);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+
+.hero{padding-block:36px 0;display:flex;flex-direction:column;gap:6px}
+.hero .eye{font-family:var(--mono);font-size:var(--f-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.hero .big{font-family:var(--disp);font-weight:700;font-size:clamp(3.2rem,12vw,6.4rem);line-height:.94;letter-spacing:-.02em;margin:4px 0 0}
+.hero .big small{font-size:.28em;font-weight:600;letter-spacing:.02em;color:var(--ink2);margin-left:.35em}
+.hero h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.15rem,3.2vw,1.6rem);margin:2px 0 0;text-transform:uppercase}
+.hero p{margin:10px 0 0;max-width:64ch;color:var(--ink2)}
+
+.ratio{margin-top:18px;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--surface)}
+.ratio .rbar{display:flex;height:34px}
+.ratio .rbar i{display:block;height:100%}
+.ratio .rlab{display:flex;flex-wrap:wrap;gap:0}
+.ratio .rlab div{flex:1 1 200px;padding:11px 14px;border-top:1px solid var(--rule);border-right:1px solid var(--rule)}
+.ratio .rlab div:last-child{border-right:0}
+.ratio b{display:block;font-family:var(--disp);font-size:1.4rem;font-weight:600;line-height:1.15}
+.ratio span{font-size:var(--f-xs);color:var(--muted);font-family:var(--mono)}
+
+section{display:flex;flex-direction:column;gap:14px}
+.sh{border-top:3px solid var(--accent);padding-top:10px;display:flex;flex-direction:column;gap:4px}
+.sh .tag{font-family:var(--mono);font-size:var(--f-xs);color:var(--muted);letter-spacing:.04em}
+.sh h2{font-family:var(--disp);font-weight:600;font-size:var(--f-xl);margin:0;text-transform:uppercase;text-wrap:balance}
+.sh p{margin:0;color:var(--ink2);font-size:var(--f-sm);max-width:74ch}
+
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:3px;padding:18px;min-width:0}
+.card svg{display:block;width:100%;height:auto}
+.ct{font-family:var(--disp);font-weight:600;font-size:var(--f-lg);margin:0 0 3px;text-transform:uppercase}
+.cs{font-size:var(--f-xs);color:var(--muted);margin:0 0 14px;font-family:var(--mono)}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+
+.bars{display:flex;flex-direction:column;gap:7px}
+.bar{display:grid;grid-template-columns:minmax(92px,32%) 1fr auto;align-items:center;gap:10px}
+.bl{font-size:var(--f-sm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bt{background:var(--track);height:13px;border-radius:0 3px 3px 0}
+.bf{display:block;height:13px;background:var(--accent);border-radius:0 3px 3px 0}
+.bf.b2{background:var(--accent2)}
+.bv{font-family:var(--mono);font-size:var(--f-xs);color:var(--ink2);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.calwrap{overflow-x:auto}
+.cal{min-width:600px;display:flex;flex-direction:column;gap:2px}
+.calrow{display:grid;grid-template-columns:62px repeat(31,1fr);gap:2px;align-items:center}
+.calm{font-family:var(--mono);font-size:var(--f-xs);color:var(--muted);white-space:nowrap}
+.cd{aspect-ratio:1;border-radius:2px;background:var(--track)}
+.cd.n{background:transparent}
+.callg{display:flex;gap:14px;flex-wrap:wrap;font-size:var(--f-xs);color:var(--ink2);margin-top:12px;align-items:center}
+.callg i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:5px;vertical-align:-2px}
+
+.gaplist{display:flex;flex-direction:column}
+.gaprow{display:grid;grid-template-columns:150px 1fr auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--grid)}
+.gaprow:last-child{border-bottom:0}
+.gaprow .gd{font-family:var(--mono);font-size:var(--f-xs);color:var(--ink2)}
+.gaprow .gt{height:10px;background:var(--crit);border-radius:2px;opacity:.8}
+.gaprow .gn{font-family:var(--mono);font-size:var(--f-xs);color:var(--crit);white-space:nowrap}
+.gaprow .gw{font-size:var(--f-xs);color:var(--muted)}
+
+.spark{display:flex;flex-direction:column;gap:5px}
+.spark .sn{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.spark .sn b{font-size:var(--f-sm);font-weight:600}
+.spark .sn span{font-family:var(--mono);font-size:var(--f-xs);color:var(--muted)}
+
+table{border-collapse:collapse;width:100%;font-size:var(--f-xs);margin-top:6px}
+th,td{text-align:left;padding:5px 9px;border-bottom:1px solid var(--grid)}
+th{font-family:var(--mono);color:var(--muted);font-weight:500;text-transform:uppercase;font-size:10px}
+td.n{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+details.tv summary{font-family:var(--mono);font-size:var(--f-xs);color:var(--accent);cursor:pointer;padding:6px 0;list-style:none}
+details.tv summary::-webkit-details-marker{display:none}
+details.tv summary::before{content:"▸ "}
+details.tv[open] summary::before{content:"▾ "}
+.tscroll{overflow-x:auto}
+
+.finds{display:flex;flex-direction:column}
+.find{display:grid;grid-template-columns:38px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--grid)}
+.find:last-child{border-bottom:0}
+.find .nn{font-family:var(--mono);font-size:var(--f-xs);color:var(--accent);padding-top:4px}
+.find h3{font-family:var(--disp);font-weight:600;font-size:var(--f-lg);margin:0 0 3px;text-transform:uppercase}
+.find p{margin:0;color:var(--ink2);font-size:var(--f-sm);max-width:76ch}
+code{font-family:var(--mono);font-size:.9em;background:var(--raised);border:1px solid var(--ring);border-radius:2px;padding:1px 4px}
+footer{border-top:1px solid var(--rule);padding-top:16px;font-size:var(--f-xs);color:var(--muted);max-width:78ch}
+.tip{position:fixed;pointer-events:none;z-index:50;background:var(--raised);color:var(--ink);border:1px solid var(--rule);
+  border-radius:3px;padding:7px 10px;font-size:var(--f-xs);font-family:var(--mono);line-height:1.5;opacity:0;transition:opacity .1s;
+  box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.tip.on{opacity:1}
+.tip b{color:var(--accent);font-weight:500}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:600px){
+  .bar{grid-template-columns:1fr auto;grid-template-areas:"l v" "t t";row-gap:4px}
+  .bl{grid-area:l}.bv{grid-area:v}.bt{grid-area:t}
+  .find{grid-template-columns:1fr;gap:4px}
+  .gaprow{grid-template-columns:1fr auto;grid-template-areas:"d n" "t t" "w w";row-gap:4px}
+  .gaprow .gd{grid-area:d}.gaprow .gn{grid-area:n}.gaprow .gt{grid-area:t}.gaprow .gw{grid-area:w}
+}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eye">Apex Legends · аккаунт mexzo0d · «zero cortisol»</div>
+    <div class="big">1 267,5<small>часов</small></div>
+    <h1>Девятнадцать месяцев, восстановленные по секундам</h1>
+    <p>Steam хранит только итоговое число. Но журнал запуска игр на этой машине уцелел целиком — и в нём лежат 170 сессий с точным началом и концом, с самого первого запуска 9 февраля 2025 года.</p>
+
+    <div class="ratio">
+      <div class="rbar" id="rbar"></div>
+      <div class="rlab">
+        <div><b>996,0 ч</b><span>до 9 февраля 2025 — на старом SSD</span></div>
+        <div><b>271,5 ч</b><span>прослежено посекундно на этой машине</span></div>
+        <div><b>170 / 126</b><span>сессий · игровых дней</span></div>
+        <div><b>99 мин</b><span>медианная сессия</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sh">
+      <div class="tag">Ответ на вопрос про 2023–24</div>
+      <h2>996 часов, которые уехали с диском</h2>
+      <p>Вычитание даёт точное число. Steam насчитал аккаунту 1267,5 часа, журнал этой машины объясняет 271,5 из них — значит 996 часов были сыграны до того, как здесь появился Apex. Восстановить их разбивку нельзя: Steam хранит на сервере только сумму, а всё локальное ушло со старым SSD. Но объём известен точно — это 78% всего наигрыша.</p>
+    </div>
+    <div class="card">
+      <svg id="ev" viewBox="0 0 760 232" role="img" aria-label="Окна покрытия источников данных"></svg>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <div class="tag">gameprocess_log.txt · 170 сессий</div>
+      <h2>Динамика по месяцам</h2>
+      <p>Первые два месяца после установки — взрывной старт: в марте 2025 игра запускалась 25 дней из 31. Дальше кривая рвётся на куски, и с каждым разом возвращение всё короче.</p>
+    </div>
+    <div class="card">
+      <p class="ct">Часов в месяц</p>
+      <p class="cs">февраль 2025 — сентябрь 2026 · пустой столбец = ни одного запуска</p>
+      <svg id="mon" viewBox="0 0 760 260" role="img" aria-label="Часы игры по месяцам"></svg>
+      <details class="tv">
+        <summary>Показать таблицей</summary>
+        <div class="tscroll"><table id="montable"></table></div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <div class="tag">126 игровых дней из 581</div>
+      <h2>Календарь</h2>
+      <p>Каждая клетка — сутки, насыщенность равна числу часов. Плотные полосы февраля-марта 2025 и ноября 2025 видно невооружённым глазом, как и четыре месяца подряд пустоты весной 2026.</p>
+    </div>
+    <div class="card">
+      <div class="calwrap"><div class="cal" id="cal"></div></div>
+      <div class="callg">
+        <span>меньше</span>
+        <span id="callegend"></span>
+        <span>больше</span>
+        <span style="color:var(--muted)">· часов за день · серое — не играли</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <div class="tag">Разрывы</div>
+      <h2>Семь пауз длиннее месяца</h2>
+      <p>Между игровыми днями бывает и одна ночь, и три с половиной месяца. Справа — во что играли на этой машине в тот же период, по тому же журналу.</p>
+    </div>
+    <div class="card"><div class="gaplist" id="gaps"></div></div>
+    <div class="g2">
+      <div class="card">
+        <p class="ct">Когда следующий раз</p>
+        <p class="cs">интервал между соседними игровыми днями</p>
+        <div class="bars" id="gapb"></div>
+      </div>
+      <div class="card">
+        <p class="ct">Длительность сессии</p>
+        <p class="cs">медиана 99 минут · максимум 6 часов</p>
+        <div class="bars" id="lens"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <div class="tag">gameprocess_log.txt · все игры машины</div>
+      <h2>Чем заняты разрывы</h2>
+      <p>Тот же журнал видит все игры. Здесь считаются дни запуска, а не часы: у остальных игр много сессий, которые в журнале так и не закрылись, поэтому их длительности занижены, а сам факт запуска — нет. Эти счётчики относятся к обоим аккаунтам машины, не только к mexzo0d.</p>
+    </div>
+    <div class="g3" id="others"></div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <div class="tag">Взвешено по часам, а не по числу запусков</div>
+      <h2>Когда играют</h2>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <p class="ct">По часам суток</p>
+        <p class="cs">часы игры · старт сессии · UTC+5</p>
+        <svg id="hr" viewBox="0 0 700 200" role="img" aria-label="Часы игры по времени суток"></svg>
+      </div>
+      <div class="card">
+        <p class="ct">По дням недели</p>
+        <p class="cs">суммарно часов за 19 месяцев</p>
+        <div class="bars" id="dow"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><div class="tag">Инсайты</div><h2>Девять наблюдений</h2></div>
+    <div class="card"><div class="finds" id="finds"></div></div>
+  </section>
+
+  <footer>
+    Сессии восстановлены из <code>Steam\logs\gameprocess_log.txt</code>: Steam пишет туда добавление и снятие отслеживаемого процесса игры. Фрагменты, разделённые паузой меньше 10 минут, склеены в одну сессию — лаунчер Apex порождает несколько процессов подряд. Сверка: за последние две недели журнал даёт 10,6 часа, собственный счётчик Steam — 10,35. Суммарный наигрыш и даты взяты из <code>localconfig.vdf</code> и <code>appmanifest_1172470.acf</code>. Журнал общий для машины и не различает аккаунты, но у второго аккаунта последний запуск Apex — 22 августа 12:18, и отслеженной сессии на это время нет, так что практически всё здесь принадлежит mexzo0d.
+  </footer>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>window.__AX={"count":170,"hours":271.5,"median":99,"max":363,"days":126,"first":"2025-02-09","last":"2026-09-12","steamTotal":1267.5,"before":996,"months":["2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],"monthly":[{"m":"2025-02","h":46.1,"n":25,"d":18},{"m":"2025-03","h":72.8,"n":32,"d":25},{"m":"2025-04","h":3.7,"n":2,"d":2},{"m":"2025-05","h":24,"n":17,"d":15},{"m":"2025-06","h":30.6,"n":27,"d":18},{"m":"2025-07","h":2.7,"n":2,"d":2},{"m":"2025-08","h":0.2,"n":1,"d":1},{"m":"2025-09","h":0,"n":0,"d":0},{"m":"2025-10","h":0,"n":0,"d":0},{"m":"2025-11","h":36.6,"n":21,"d":17},{"m":"2025-12","h":1.2,"n":1,"d":1},{"m":"2026-01","h":7.5,"n":5,"d":4},{"m":"2026-02","h":11.3,"n":10,"d":6},{"m":"2026-03","h":3,"n":7,"d":3},{"m":"2026-04","h":0,"n":0,"d":0},{"m":"2026-05","h":0.3,"n":1,"d":1},{"m":"2026-06","h":0,"n":0,"d":0},{"m":"2026-07","h":0,"n":0,"d":0},{"m":"2026-08","h":20.8,"n":11,"d":8},{"m":"2026-09","h":10.6,"n":8,"d":5}],"daily":[{"d":"2025-02-09","h":5.32},{"d":"2025-02-10","h":2.87},{"d":"2025-02-11","h":2.58},{"d":"2025-02-12","h":2.25},{"d":"2025-02-13","h":3.42},{"d":"2025-02-15","h":7.22},{"d":"2025-02-16","h":2.25},{"d":"2025-02-17","h":0.08},{"d":"2025-02-18","h":3.52},{"d":"2025-02-19","h":2.43},{"d":"2025-02-20","h":2.72},{"d":"2025-02-22","h":0.57},{"d":"2025-02-23","h":2.47},{"d":"2025-02-24","h":2.3},{"d":"2025-02-25","h":2.22},{"d":"2025-02-26","h":1.73},{"d":"2025-02-27","h":1.82},{"d":"2025-02-28","h":0.35},{"d":"2025-03-01","h":6.6},{"d":"2025-03-02","h":3.43},{"d":"2025-03-03","h":2.18},{"d":"2025-03-04","h":2.37},{"d":"2025-03-05","h":3},{"d":"2025-03-06","h":1},{"d":"2025-03-07","h":5.82},{"d":"2025-03-08","h":6.05},{"d":"2025-03-09","h":3.48},{"d":"2025-03-10","h":2.32},{"d":"2025-03-11","h":2.1},{"d":"2025-03-13","h":3.28},{"d":"2025-03-14","h":0.07},{"d":"2025-03-15","h":5.28},{"d":"2025-03-16","h":3.32},{"d":"2025-03-19","h":2.28},{"d":"2025-03-21","h":5.1},{"d":"2025-03-22","h":0.7},{"d":"2025-03-23","h":2.68},{"d":"2025-03-25","h":0.13},{"d":"2025-03-26","h":2.15},{"d":"2025-03-27","h":2.57},{"d":"2025-03-28","h":1.83},{"d":"2025-03-30","h":3.4},{"d":"2025-03-31","h":1.7},{"d":"2025-04-01","h":1.75},{"d":"2025-04-03","h":1.92},{"d":"2025-05-09","h":0.78},{"d":"2025-05-11","h":3.15},{"d":"2025-05-12","h":2.23},{"d":"2025-05-14","h":1.35},{"d":"2025-05-18","h":0.83},{"d":"2025-05-19","h":1.87},{"d":"2025-05-20","h":3.03},{"d":"2025-05-21","h":1.6},{"d":"2025-05-22","h":1.97},{"d":"2025-05-23","h":1.28},{"d":"2025-05-24","h":1.03},{"d":"2025-05-25","h":0.95},{"d":"2025-05-26","h":0.62},{"d":"2025-05-27","h":1.72},{"d":"2025-05-28","h":1.55},{"d":"2025-06-03","h":1.95},{"d":"2025-06-04","h":1.8},{"d":"2025-06-05","h":1.22},{"d":"2025-06-06","h":3.08},{"d":"2025-06-07","h":2.23},{"d":"2025-06-09","h":0.77},{"d":"2025-06-10","h":0.8},{"d":"2025-06-12","h":3.12},{"d":"2025-06-13","h":0.97},{"d":"2025-06-14","h":3.3},{"d":"2025-06-15","h":2.1},{"d":"2025-06-16","h":1.73},{"d":"2025-06-17","h":0.03},{"d":"2025-06-18","h":0.93},{"d":"2025-06-19","h":2.6},{"d":"2025-06-20","h":0.82},{"d":"2025-06-22","h":1.72},{"d":"2025-06-23","h":1.45},{"d":"2025-07-01","h":1.52},{"d":"2025-07-02","h":1.2},{"d":"2025-08-23","h":0.22},{"d":"2025-11-03","h":0.72},{"d":"2025-11-04","h":2.52},{"d":"2025-11-05","h":1.97},{"d":"2025-11-06","h":1.82},{"d":"2025-11-07","h":0.07},{"d":"2025-11-09","h":4.42},{"d":"2025-11-15","h":2.02},{"d":"2025-11-16","h":2.3},{"d":"2025-11-19","h":1.77},{"d":"2025-11-20","h":2.2},{"d":"2025-11-22","h":2.82},{"d":"2025-11-23","h":2.88},{"d":"2025-11-25","h":3.48},{"d":"2025-11-26","h":2},{"d":"2025-11-28","h":1.35},{"d":"2025-11-29","h":3.28},{"d":"2025-11-30","h":1.02},{"d":"2025-12-05","h":1.22},{"d":"2026-01-02","h":0.1},{"d":"2026-01-06","h":0.22},{"d":"2026-01-17","h":0.75},{"d":"2026-01-31","h":6.43},{"d":"2026-02-01","h":1.7},{"d":"2026-02-06","h":3.2},{"d":"2026-02-07","h":2.85},{"d":"2026-02-12","h":2.32},{"d":"2026-02-13","h":0.85},{"d":"2026-02-14","h":0.35},{"d":"2026-03-27","h":0.5},{"d":"2026-03-28","h":2.05},{"d":"2026-03-29","h":0.47},{"d":"2026-05-11","h":0.32},{"d":"2026-08-22","h":5.35},{"d":"2026-08-23","h":2.4},{"d":"2026-08-24","h":2.42},{"d":"2026-08-26","h":0.8},{"d":"2026-08-28","h":2.92},{"d":"2026-08-29","h":2.6},{"d":"2026-08-30","h":2.13},{"d":"2026-08-31","h":2.23},{"d":"2026-09-03","h":2.48},{"d":"2026-09-06","h":2.95},{"d":"2026-09-09","h":1.77},{"d":"2026-09-10","h":1.03},{"d":"2026-09-12","h":2.38}],"byHour":[0,0,0,0,0,0,0,0,0,0,0,7.4,19.6,21.3,11.3,2.1,11.5,9.3,25.4,27,96.4,29.4,10.1,0.7],"byDow":[55.4,25.8,29.9,30.6,35.5,30.3,64.1],"lens":[{"l":"до 15 мин","n":30},{"l":"15–30 мин","n":12},{"l":"30–60 мин","n":21},{"l":"1–2 часа","n":42},{"l":"2–4 часа","n":60},{"l":"больше 4 ч","n":5}],"bigGaps":[{"from":"2025-04-03","to":"2025-05-09","d":36},{"from":"2025-07-02","to":"2025-08-23","d":52},{"from":"2025-08-23","to":"2025-11-03","d":72},{"from":"2025-12-05","to":"2026-01-02","d":28},{"from":"2026-02-14","to":"2026-03-27","d":41},{"from":"2026-03-29","to":"2026-05-11","d":43},{"from":"2026-05-11","to":"2026-08-22","d":103}],"gapBuckets":[{"l":"на следующий день","n":84},{"l":"через 2–3 дня","n":24},{"l":"через неделю","n":8},{"l":"10–24 дня","n":2},{"l":"больше 25 дней","n":7}],"byHourSpread":[5.8,2.1,0.2,0,0,0,0,0,0,0,0,1.3,7.9,13.7,18.7,13.2,8.2,7.9,13,16.7,49,57.6,40.2,15.8],"others":[{"name":"Counter-Strike 2","days":62,"per":[0,0,0,1,9,27,20,1,0,1,0,0,0,0,1,0,0,0,0,0]},{"name":"Baldur\u0027s Gate 3","days":33,"per":[0,0,2,3,0,0,0,0,0,4,23,1,0,0,0,0,0,0,0,0]},{"name":"Overwatch 2","days":18,"per":[0,0,0,0,0,0,0,0,0,0,0,0,11,7,0,0,0,0,0,0]},{"name":"Hollow Knight: Silksong","days":15,"per":[0,0,0,0,0,0,0,14,1,0,0,0,0,0,0,0,0,0,0,0]},{"name":"Tiny Rogues","days":6,"per":[0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0]},{"name":"Terraria","days":6,"per":[0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0]}],"gapInfo":[{"from":"2025-04-03","to":"2025-05-09","d":36,"what":"Baldur\u0027s Gate 3 — 5 дн."},{"from":"2025-07-02","to":"2025-08-23","d":52,"what":"Counter-Strike 2 — 39 дн.; Binding of Isaac — 3 дн."},{"from":"2025-08-23","to":"2025-11-03","d":72,"what":"Hollow Knight: Silksong — 15 дн.; Counter-Strike 2 — 7 дн."},{"from":"2025-12-05","to":"2026-01-02","d":28,"what":"Baldur\u0027s Gate 3 — 21 дн."},{"from":"2026-02-14","to":"2026-03-27","d":41,"what":"Overwatch 2 — 16 дн.; Terraria — 6 дн."},{"from":"2026-03-29","to":"2026-05-11","d":43,"what":"Counter-Strike 2 — 1 дн.; Geometry Dash — 1 дн."},{"from":"2026-05-11","to":"2026-08-22","d":103,"what":"Dark Souls Remastered — 3 дн."}]};</script>
+<script>
+(function(){
+  "use strict";
+  var A = window.__AX;
+  function flat(v){ while(Array.isArray(v)&&v.length===1&&Array.isArray(v[0])) v=v[0]; return v; }
+  ["byHour","byDow","months"].forEach(function(k){ A[k]=flat(A[k]); });
+  var $=function(id){return document.getElementById(id);};
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
+  var nf=function(n,d){return n.toLocaleString("ru-RU",{minimumFractionDigits:d||0,maximumFractionDigits:d||0});};
+  var MN=["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
+  var tip=$("tip");
+  function showTip(e,h){ tip.innerHTML=h; tip.classList.add("on");
+    tip.style.left=Math.min(e.clientX+14,window.innerWidth-215)+"px"; tip.style.top=(e.clientY+16)+"px"; }
+  function hideTip(){ tip.classList.remove("on"); }
+  function cp(x,y,w,h,r){ if(h<=0) return ""; r=Math.min(r,w/2,h);
+    return "M"+x.toFixed(1)+" "+(y+h).toFixed(1)+"V"+(y+r).toFixed(1)+"a"+r+" "+r+" 0 0 1 "+r+" -"+r+
+           "h"+(w-2*r).toFixed(1)+"a"+r+" "+r+" 0 0 1 "+r+" "+r+"V"+(y+h).toFixed(1)+"Z"; }
+
+  /* соотношение до/после */
+  (function(){
+    var b=A.before, a=A.hours, t=b+a;
+    $("rbar").innerHTML='<i style="width:'+(b/t*100)+'%;background:var(--track)"></i>'+
+                        '<i style="width:'+(a/t*100)+'%;background:var(--accent)"></i>';
+  })();
+
+  /* окна источников */
+  (function(){
+    var W=760,H=232,L0=196,R=16,T=26,B=26,NOTE=104;
+    var t0=Date.UTC(2023,0,1), t1=Date.UTC(2026,8,18), pw=W-L0-R-NOTE;
+    function X(iso){ var t=Date.parse(iso+"T00:00:00Z"); return L0+Math.max(0,Math.min(1,(t-t0)/(t1-t0)))*pw; }
+    var rows=[
+      {n:"Наигрыш Steam (сумма)", s:"2023-01-01", e:"2026-09-17", note:"1267,5 ч", open:true, c:"var(--track)"},
+      {n:"Журнал запуска игр",    s:"2025-02-09", e:"2026-09-12", note:"271,5 ч", c:"var(--accent)"},
+      {n:"Apex установлен",       s:"2025-02-09", e:"2026-09-17", note:"09.02.2025", c:"var(--ink2)"},
+      {n:"Журнал System",         s:"2026-02-03", e:"2026-09-17", note:"63 запуска", c:"var(--accent2)"},
+      {n:"SRUM: потребление",     s:"2026-07-19", e:"2026-09-17", note:"13 дней", c:"var(--accent2)"},
+      {n:"Prefetch",              s:null, note:"отключён", c:"var(--crit)"}
+    ];
+    var rh=(H-T-B)/rows.length, s="";
+    for(var y=2023;y<=2026;y++){
+      var x=X(y+"-01-01");
+      s+='<line x1="'+x.toFixed(1)+'" y1="'+(T-10)+'" x2="'+x.toFixed(1)+'" y2="'+(H-B+4)+'" stroke="var(--grid)" stroke-width="1"/>';
+      s+='<text x="'+(x+4).toFixed(1)+'" y="'+(T-14)+'" fill="var(--muted)" font-size="11" font-family="var(--mono)">'+y+'</text>';
+    }
+    rows.forEach(function(r,i){
+      var cy=T+i*rh+rh/2;
+      s+='<text x="'+(L0-10)+'" y="'+(cy+4).toFixed(1)+'" fill="var(--ink)" font-size="12" text-anchor="end" font-family="var(--sans)">'+esc(r.n)+'</text>';
+      if(r.s){
+        var x1=X(r.s), x2=X(r.e);
+        s+='<rect x="'+x1.toFixed(1)+'" y="'+(cy-5.5).toFixed(1)+'" width="'+Math.max(3,x2-x1).toFixed(1)+'" height="11" rx="2" fill="'+r.c+'"/>';
+        if(r.open) s+='<path d="M'+(L0-1)+' '+(cy-7)+'l-9 7 9 7z" fill="'+r.c+'"/>';
+        s+='<text x="'+(W-R-NOTE+8)+'" y="'+(cy+4).toFixed(1)+'" fill="var(--muted)" font-size="10.5" font-family="var(--mono)">'+esc(r.note)+'</text>';
+      } else {
+        s+='<line x1="'+L0+'" y1="'+cy.toFixed(1)+'" x2="'+(W-R-NOTE)+'" y2="'+cy.toFixed(1)+'" stroke="var(--rule)" stroke-width="1" stroke-dasharray="3 4"/>';
+        s+='<text x="'+(W-R-NOTE+8)+'" y="'+(cy+4).toFixed(1)+'" fill="var(--crit)" font-size="10.5" font-family="var(--mono)">'+esc(r.note)+'</text>';
+      }
+    });
+    $("ev").innerHTML=s;
+  })();
+
+  /* месяцы */
+  (function(){
+    var d=A.monthly, W=760,H=260,L0=34,R=14,T=22,Bm=42;
+    var pw=W-L0-R, ph=H-T-Bm, slot=pw/d.length, bw=Math.min(26,slot-7);
+    var mx=Math.max.apply(null,d.map(function(x){return x.h;}));
+    var step=Math.max(10,Math.ceil(mx/4/10)*10), scale=Math.ceil(mx/step)*step, s="";
+    for(var v=0;v<=scale+0.01;v+=step){
+      var y=T+ph-(v/scale)*ph;
+      s+='<line x1="'+L0+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'" stroke="var(--grid)" stroke-width="1"/>';
+      s+='<text x="'+(L0-7)+'" y="'+(y+3.5).toFixed(1)+'" fill="var(--muted)" font-size="10" font-family="var(--mono)" text-anchor="end">'+v+'</text>';
+    }
+    d.forEach(function(x,i){
+      var cx=L0+i*slot+slot/2, h=(x.h/scale)*ph;
+      if(x.h>0){
+        s+='<path d="'+cp(cx-bw/2,T+ph-h,bw,h,3)+'" fill="var(--accent)"><title>'+x.m+' — '+nf(x.h,1)+' ч, '+x.d+' дн., '+x.n+' сес.</title></path>';
+      } else {
+        s+='<line x1="'+(cx-bw/2).toFixed(1)+'" y1="'+(T+ph)+'" x2="'+(cx+bw/2).toFixed(1)+'" y2="'+(T+ph)+'" stroke="var(--rule)" stroke-width="2"/>';
+      }
+      var mo=parseInt(x.m.slice(5,7),10);
+      s+='<text x="'+cx.toFixed(1)+'" y="'+(T+ph+15)+'" fill="var(--muted)" font-size="9.5" font-family="var(--mono)" text-anchor="middle">'+MN[mo-1]+'</text>';
+      if(mo===1||i===0) s+='<text x="'+cx.toFixed(1)+'" y="'+(T+ph+28)+'" fill="var(--muted)" font-size="9.5" font-family="var(--mono)" text-anchor="middle">'+x.m.slice(0,4)+'</text>';
+    });
+    var pi=0; d.forEach(function(x,i){ if(x.h>d[pi].h) pi=i; });
+    s+='<text x="'+(L0+pi*slot+slot/2).toFixed(1)+'" y="'+(T+ph-(d[pi].h/scale)*ph-7).toFixed(1)+'" fill="var(--ink)" font-size="10.5" font-family="var(--mono)" text-anchor="middle">'+nf(d[pi].h,1)+' ч</text>';
+    $("mon").innerHTML=s;
+    $("montable").innerHTML="<thead><tr><th>месяц</th><th style='text-align:right'>часов</th><th style='text-align:right'>дней</th><th style='text-align:right'>сессий</th></tr></thead><tbody>"+
+      d.map(function(x){return "<tr><td>"+x.m+"</td><td class='n'>"+nf(x.h,1)+"</td><td class='n'>"+x.d+"</td><td class='n'>"+x.n+"</td></tr>";}).join("")+"</tbody>";
+  })();
+
+  /* календарь */
+  (function(){
+    var by={}; A.daily.forEach(function(x){ by[x.d]=x.h; });
+    var steps=["var(--track)","#f7c9b4","#f0a07c","#eb6834","#b8431a"];
+    function col(h){ if(!h) return steps[0]; if(h<1) return steps[1]; if(h<2) return steps[2]; if(h<4) return steps[3]; return steps[4]; }
+    $("callegend").innerHTML=steps.map(function(c){return '<i style="background:'+c+'"></i>';}).join("");
+    var html="";
+    A.months.forEach(function(m){
+      var y=+m.slice(0,4), mo=+m.slice(5,7), dim=new Date(y,mo,0).getDate();
+      html+='<div class="calrow"><span class="calm">'+MN[mo-1]+" "+m.slice(2,4)+'</span>';
+      for(var dd=1;dd<=31;dd++){
+        if(dd>dim){ html+='<span class="cd n"></span>'; continue; }
+        var k=m+"-"+(dd<10?"0":"")+dd, h=by[k]||0;
+        html+='<span class="cd" style="background:'+col(h)+'" data-t="'+k+(h?" — "+nf(h,1)+" ч":" — не играли")+'"></span>';
+      }
+      html+='</div>';
+    });
+    var cal=$("cal"); cal.innerHTML=html;
+    cal.addEventListener("mousemove",function(e){ var t=e.target.getAttribute&&e.target.getAttribute("data-t"); if(t) showTip(e,t); else hideTip(); });
+    cal.addEventListener("mouseleave",hideTip);
+  })();
+
+  /* разрывы */
+  (function(){
+    var mx=Math.max.apply(null,A.gapInfo.map(function(g){return g.d;}));
+    $("gaps").innerHTML=A.gapInfo.map(function(g){
+      return '<div class="gaprow"><span class="gd">'+g.from+' → '+g.to+'</span>'+
+        '<span class="gt" style="width:'+(g.d/mx*100)+'%"></span>'+
+        '<span class="gn">'+g.d+' дней</span>'+
+        '<span class="gw">'+esc(g.what)+'</span></div>';
+    }).join("");
+  })();
+
+  function bars(id,items,cls){
+    var mx=Math.max.apply(null,items.map(function(i){return i.v;}))||1;
+    $(id).innerHTML=items.map(function(i){
+      return '<div class="bar"><span class="bl">'+esc(i.l)+'</span>'+
+        '<span class="bt"><i class="bf'+(cls?" "+cls:"")+'" style="width:'+Math.max(i.v>0?1.5:0,i.v/mx*100)+'%"></i></span>'+
+        '<span class="bv">'+esc(i.t)+'</span></div>';
+    }).join("");
+  }
+  bars("gapb",A.gapBuckets.map(function(g){return {l:g.l,v:g.n,t:g.n+"×"};}));
+  bars("lens",A.lens.map(function(g){return {l:g.l,v:g.n,t:g.n+" сес."};}));
+  (function(){
+    var nm=["вс","пн","вт","ср","чт","пт","сб"], ord=[1,2,3,4,5,6,0];
+    bars("dow",ord.map(function(d){ return {l:nm[d], v:A.byDow[d], t:nf(A.byDow[d],1)+" ч"}; }));
+  })();
+
+  /* часы суток */
+  (function(){
+    var v=A.byHourSpread, W=700,H=200,L0=32,R=12,T=16,Bm=34;
+    var pw=W-L0-R, ph=H-T-Bm, slot=pw/24, bw=Math.min(20,slot-4);
+    var mx=Math.max.apply(null,v), step=Math.max(5,Math.ceil(mx/4/5)*5), scale=Math.ceil(mx/step)*step, s="";
+    for(var t=0;t<=scale+0.01;t+=step){
+      var y=T+ph-(t/scale)*ph;
+      s+='<line x1="'+L0+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'" stroke="var(--grid)" stroke-width="1"/>';
+      s+='<text x="'+(L0-6)+'" y="'+(y+3.5).toFixed(1)+'" fill="var(--muted)" font-size="10" font-family="var(--mono)" text-anchor="end">'+t+'</text>';
+    }
+    v.forEach(function(x,i){
+      var cx=L0+i*slot+slot/2, h=(x/scale)*ph;
+      s+='<path d="'+cp(cx-bw/2,T+ph-h,bw,h,2.5)+'" fill="var(--accent)"><title>'+(i<10?"0":"")+i+':00 — '+nf(x,1)+' ч</title></path>';
+      if(i%3===0) s+='<text x="'+cx.toFixed(1)+'" y="'+(T+ph+14)+'" fill="var(--muted)" font-size="9.5" font-family="var(--mono)" text-anchor="middle">'+(i<10?"0":"")+i+'</text>';
+    });
+    s+='<text x="'+L0+'" y="'+(H-4)+'" fill="var(--muted)" font-size="10" font-family="var(--mono)">часов игры</text>';
+    $("hr").innerHTML=s;
+  })();
+
+  /* другие игры — малые кратные, дни запуска */
+  (function(){
+    $("others").innerHTML=A.others.map(function(g){
+      var per=flat(g.per), mx=Math.max.apply(null,per)||1;
+      var W=240,H=54,bw=W/per.length;
+      var b=per.map(function(v,i){
+        var h=(v/mx)*H;
+        return v>0 ? '<path d="'+cp(i*bw+1,H-h,bw-2,h,2)+'" fill="var(--accent2)"><title>'+A.months[i]+' — '+v+' дн.</title></path>'
+                   : '<line x1="'+(i*bw+1)+'" y1="'+H+'" x2="'+(i*bw+bw-1)+'" y2="'+H+'" stroke="var(--rule)" stroke-width="1.5"/>';
+      }).join("");
+      return '<div class="card spark"><div class="sn"><b>'+esc(g.name)+'</b><span>'+g.days+' дн.</span></div>'+
+        '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(g.name)+': дни запуска по месяцам">'+b+'</svg>'+
+        '<span style="font-family:var(--mono);font-size:10px;color:var(--muted)">фев 25 → сен 26 · дней запуска</span></div>';
+    }).join("");
+  })();
+
+  /* инсайты */
+  var finds=[
+    {h:"996 часов остались на старом диске",p:"Steam насчитал аккаунту 1267,5 часа, журнал этой машины объясняет 271,5. Разница — 996 часов, или 78% всего наигрыша, сыгранные до 9 февраля 2025. Это единственное, что удалось узнать про 2023–24: точный объём без единой подробности."},
+    {h:"Самый плотный месяц — первый полный",p:"Март 2025: 72,7 часа за 25 игровых дней из 31. Больше такого не повторялось ни разу — следующий рекорд, ноябрь 2025, вдвое скромнее (36 часов)."},
+    {h:"Типичная сессия — полтора-два часа",p:"Медиана 99 минут, среднее 96. Самая длинная — 6 часов 3 минуты. Коротких запусков мало: 60 сессий из 170 длятся от двух до четырёх часов, и это самая населённая корзина."},
+    {h:"Silksong отнял два месяца",p:"С 23 августа по 3 ноября 2025 — 72 дня без Apex. Журнал показывает, чем они заняты: 4 сентября вышел Hollow Knight: Silksong и получил 15 дней запусков, ещё 7 забрал Counter-Strike."},
+    {h:"Работа обошлась в 103 дня",p:"Самая длинная пауза — с 11 мая по 22 августа 2026, через неделю после выхода на работу. И она же единственная, которую нечем объяснить: за все 103 дня журнал нашёл лишь три дня Dark Souls. Остальные шесть пауз заняты другой игрой, эта — просто пустая."},
+    {h:"Возвращения становятся короче",p:"45,9 → 72,7 часа на старте, потом 36 в ноябре 2025, 20,3 в августе 2026. Каждый новый заход слабее предыдущего, хотя число дней в месяце держится примерно одинаковым — сокращается длина посиделок, а не их частота."},
+    {h:"Вечер с восьми до одиннадцати",p:"Три часа — 20:00, 21:00 и 22:00 — собрали 147 из 271 часа, то есть 54% всей игры. Пик приходится на 21:00 (57,6 ч). Вторая, дневная горка в 13–15 часов — выходная: суббота даёт 64,1 часа, воскресенье 55,4. Вместе это 119,5 против 152,1 у всех пяти будних дней — то есть в пересчёте на день выходной вдвое насыщеннее будня."},
+    {h:"Один день из четырёх с половиной",p:"126 игровых дней за 581 день наблюдения — 22%. При этом играют сериями: в 84 случаях из 125 следующий заход был уже на следующий день."},
+    {h:"Журнал точнее, чем кажется",p:"Сверка с собственным счётчиком Steam за последние две недели: журнал даёт 10,6 часа, Steam — 10,35. Расхождение 2,4% на двухнедельном окне — значит и 271,5 часа за девятнадцать месяцев можно считать надёжными."}
+  ];
+  $("finds").innerHTML=finds.map(function(f,i){
+    return '<div class="find"><span class="nn">'+(i<9?"0":"")+(i+1)+'</span><div><h3>'+f.h+'</h3><p>'+f.p+'</p></div></div>';
+  }).join("");
+})();
+</script>
